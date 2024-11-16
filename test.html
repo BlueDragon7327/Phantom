@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Iframe with Fullscreen</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    iframe {
+      margin-top: 20px;
+      width: 80%;
+      height: 500px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dynamic Iframe Loader</h1>
+  <button onclick="promptForURL()">Load Website</button>
+  <button id="fullscreen-btn" style="display: none;" onclick="makeFullscreen()">Fullscreen</button>
+  <div id="iframe-container"></div>
+
+  <script>
+    function promptForURL() {
+      const url = prompt("Enter the full URL of the website you want to load:");
+      if (url) {
+        addIframe(url);
+      }
+    }
+
+    function addIframe(url) {
+      const container = document.getElementById('iframe-container');
+      const existingIframe = document.getElementById('dynamic-iframe');
+
+      // Remove existing iframe if any
+      if (existingIframe) {
+        container.removeChild(existingIframe);
+      }
+
+      // Create new iframe
+      const iframe = document.createElement('iframe');
+      iframe.id = 'dynamic-iframe';
+      iframe.src = url;
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+
+      // Show fullscreen button
+      document.getElementById('fullscreen-btn').style.display = 'inline-block';
+    }
+
+    function makeFullscreen() {
+      const iframe = document.getElementById('dynamic-iframe');
+      if (iframe) {
+        if (iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        } else if (iframe.mozRequestFullScreen) { // For Firefox
+          iframe.mozRequestFullScreen();
+        } else if (iframe.webkitRequestFullscreen) { // For Chrome, Safari, and Opera
+          iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) { // For IE/Edge
+          iframe.msRequestFullscreen();
+        } else {
+          alert("Fullscreen mode is not supported in this browser.");
+        }
+      } else {
+        alert("No iframe to make fullscreen!");
+      }
+    }
+  </script>
+</body>
+</html>
