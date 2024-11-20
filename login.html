@@ -5,36 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phantom - Login</title>
     <style>
+        /* Import Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        /* General Styles */
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #12121c);
+            background: linear-gradient(135deg, #2c003e, #000000);
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            overflow: hidden;
         }
 
+        /* Login Container */
         .login-container {
-            background: rgba(30, 30, 50, 0.9);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 100%;
+            max-width: 400px;
             text-align: center;
+            animation: fadeIn 1s ease-out forwards;
         }
 
+        /* Login Title */
         .login-title {
             font-size: 2rem;
             margin-bottom: 20px;
             color: #8a2be2;
+            text-shadow: 0 4px 6px rgba(138, 43, 226, 0.3);
         }
 
-        input {
+        /* Input Fields */
+        .login-container input {
             width: 100%;
-            padding: 15px;
+            padding: 15px 20px;
             margin: 10px 0;
             font-size: 1rem;
             border: none;
@@ -42,50 +55,113 @@
             outline: none;
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
+        .login-container input::placeholder {
+            color: #d1d1d1;
+        }
+
+        .login-container input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+
+        /* Login Button */
         .login-button {
             padding: 15px 30px;
             font-size: 1rem;
-            background: linear-gradient(135deg, #8a2be2, #1e1e2f);
-            color: #ffffff;
+            background: linear-gradient(135deg, #8a2be2, #9d52f8);
             border: none;
+            color: #ffffff;
             border-radius: 15px;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
             width: 100%;
+            text-decoration: none;
         }
 
         .login-button:hover {
-            background: linear-gradient(135deg, #1e1e2f, #8a2be2);
             transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.6);
+        }
+
+        /* Forgot Password Link */
+        .forgot-password {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #8a2be2;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #9d52f8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
     <script>
-        // Login Logic
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days*24*60*60*1000));
+            const expires = "expires="+ d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        // Function to get a cookie
+        function getCookie(name) {
+            const cname = name + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cname) === 0) {
+                    return c.substring(cname.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        // Function to check login status
+        function checkLogin() {
+            const user = getCookie("username");
+            if (user !== "") {
+                window.location.href = "dashboard.html";
+            }
+        }
+
+        // Function to handle login
         function handleLogin(event) {
             event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
 
             if (username === 'dev' && password === 'dev') {
-                document.cookie = `username=${username}; path=/; max-age=86400`;
-                window.location.href = 'dashboard.html';
+                setCookie("username", username, 1); // Expires in 1 day
+                window.location.href = "dashboard.html";
             } else {
-                alert('Invalid login credentials');
+                alert("Invalid credentials. Try username: dev, password: dev.");
             }
         }
 
-        // Check if already logged in
-        function checkLogin() {
-            const cookies = document.cookie.split('; ');
-            const loggedIn = cookies.find(cookie => cookie.startsWith('username='));
-
-            if (loggedIn) {
-                window.location.href = 'dashboard.html';
-            }
-        }
-
+        // Check login status on page load
         document.addEventListener('DOMContentLoaded', checkLogin);
     </script>
 </head>
@@ -97,6 +173,7 @@
             <input type="password" id="password" placeholder="Password" required />
             <button class="login-button" type="submit">Login</button>
         </form>
+        <a href="#" class="forgot-password">Forgot your password?</a>
     </div>
 </body>
 </html>
