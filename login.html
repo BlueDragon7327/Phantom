@@ -86,11 +86,11 @@
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            if (username === "dev" && password === "dev") {
+            if (username === "dev" && password === "dev123") {
                 localStorage.setItem("loggedInUser", username);
                 window.location.href = "dashboard.html";
             } else {
-                alert("Invalid credentials. Try username: dev, password: dev.");
+                alert("Invalid credentials");
             }
         }
     </script>
