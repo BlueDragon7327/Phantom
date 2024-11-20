@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom - Dashboard</title>
+    <style>
+        /* General Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #12121c);
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(30, 30, 50, 0.9));
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.7);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #8a2be2;
+            margin-bottom: 40px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .nav-item {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            text-align: left;
+            color: #ffffff;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            color: #8a2be2;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(138, 43, 226, 0.3);
+            transform: translateX(10px);
+        }
+
+        /* Bottom-Left Dropdown for Username */
+        .username-dropdown {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 90%;
+        }
+
+        .username {
+            cursor: pointer;
+            color: #8a2be2;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .username-dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: -110%;
+            transform: translateY(-100%);
+            background: rgba(30, 30, 50, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .username-dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: background 0.3s ease;
+        }
+
+        .username-dropdown-menu a:hover {
+            background: rgba(138, 43, 226, 0.4);
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, rgba(20, 20, 35, 0.9), rgba(30, 30, 50, 0.9));
+        }
+
+        .dashboard-header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .dashboard-section {
+            background: rgba(40, 40, 60, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #8a2be2;
+            text-shadow: 0 3px 10px rgba(138, 43, 226, 0.4);
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #8a2be2, #1e1e2f);
+            color: #ffffff;
+            border-radius: 15px;
+            text-decoration: none;
+            text-align: center;
+            width: 100%;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .download-button:hover {
+            background: linear-gradient(135deg, #1e1e2f, #8a2be2);
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const username = localStorage.getItem("loggedInUser") || "Guest";
+            document.getElementById("username-display").textContent = username;
+
+            // Dropdown menu toggle
+            const usernameBtn = document.querySelector(".username");
+            const dropdownMenu = document.querySelector(".username-dropdown-menu");
+
+            usernameBtn.addEventListener("click", () => {
+                dropdownMenu.style.display =
+                    dropdownMenu.style.display === "block" ? "none" : "block";
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-logo">Phantom</div>
+        <button class="nav-item"><i>🏠</i> Home</button>
+        <button class="nav-item"><i>⚙️</i> Settings</button>
+        <button class="nav-item"><i>📂</i> Files</button>
+        <div class="username-dropdown">
+            <div class="username">
+                <span id="username-display"></span> ▼
+            </div>
+            <div class="username-dropdown-menu">
+                <a href="#">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-content">
+        <div class="dashboard-header">Welcome to Your Dashboard</div>
+        <div class="dashboard-section">
+            <div class="section-title">Download Phantom</div>
+            <a href="https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html" class="download-button">
+                Download Phantom
+            </a>
+        </div>
+    </div>
+</body>
+</html>
