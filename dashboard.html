@@ -3,90 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Phantom</title>
+    <title>Phantom Dashboard</title>
     <style>
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
             display: flex;
             height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #1e1e2f, #3f3f5b);
+            background: linear-gradient(135deg, #1e1e2f, #3c3c59);
             color: #fff;
         }
 
-        .nav {
-            width: 20%;
-            background: #2a2a3d;
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: #28293e;
             display: flex;
             flex-direction: column;
-            padding: 1rem;
+            justify-content: space-between;
+            padding: 20px 10px;
         }
 
+        .sidebar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #7f5af0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar .nav a {
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #d1d1e9;
+            transition: background 0.3s;
+        }
+
+        .sidebar .nav a.active, .sidebar .nav a:hover {
+            background: #7f5af0;
+            color: #fff;
+        }
+
+        .sidebar .user {
+            text-align: center;
+            font-size: 14px;
+            color: #d1d1e9;
+            position: relative;
+        }
+
+        .sidebar .user .dropdown {
+            display: none;
+            background: #3c3c59;
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar .user:hover .dropdown {
+            display: block;
+        }
+
+        .sidebar .user .dropdown a {
+            color: #d1d1e9;
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        .sidebar .user .dropdown a:hover {
+            background: #7f5af0;
+            color: #fff;
+        }
+
+        /* Main Dashboard Content */
         .main {
             flex: 1;
-            padding: 2rem;
+            padding: 20px;
+            overflow-y: auto;
         }
 
-        .user-info {
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
+        .main .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
-        button {
-            background: #7f5eff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+        .main .header h1 {
+            font-size: 28px;
             color: #fff;
-            cursor: pointer;
-            transition: background 0.3s ease;
         }
 
-        button:hover {
-            background: #9a7dff;
+        .main .header button {
+            background: #7f5af0;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .main .header button:hover {
+            background: #5c4ad0;
+        }
+
+        .main .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .main .content .card {
+            background: #3c3c59;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .main .content .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .main .content .card h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .main .content .card p {
+            font-size: 14px;
+            color: #d1d1e9;
+        }
+
+        .main .content .card button {
+            margin-top: 15px;
+            background: #7f5af0;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .main .content .card button:hover {
+            background: #5c4ad0;
         }
     </style>
 </head>
 <body>
-    <div class="nav">
-        <h2>Phantom</h2>
-        <ul>
-            <li><button onclick="navigate('home')">Home</button></li>
-            <li><button onclick="navigate('settings')">Settings</button></li>
-            <li><button onclick="navigate('downloads')">Downloads</button></li>
-        </ul>
-        <div class="user-info">
-            <span id="username"></span>
-            <button onclick="logout()">Logout</button>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">Phantom</div>
+        <div class="nav">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Settings</a>
+            <a href="#">About</a>
+            <a href="#">Support</a>
+        </div>
+        <div class="user">
+            Logged in as: <strong id="username">dev</strong>
+            <div class="dropdown">
+                <a href="#" id="logout">Log Out</a>
+            </div>
         </div>
     </div>
-    <div class="main" id="content">
-        <h1>Welcome to the Dashboard</h1>
-        <p>Select an option from the navigation menu.</p>
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="header">
+            <h1>Welcome to the Phantom Dashboard</h1>
+            <button>Download Phantom</button>
+        </div>
+        <div class="content">
+            <div class="card">
+                <h2>Module 1</h2>
+                <p>Manage your app settings here.</p>
+                <button>Open</button>
+            </div>
+            <div class="card">
+                <h2>Module 2</h2>
+                <p>Access tools and utilities.</p>
+                <button>Open</button>
+            </div>
+            <div class="card">
+                <h2>Module 3</h2>
+                <p>Learn more about Phantom's features.</p>
+                <button>Open</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        const username = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('username='))
-            ?.split('=')[1];
-
-        if (!username) {
-            window.location.href = 'login.html';
+        // Retrieve username from cookies
+        const username = document.cookie.split('; ').find(row => row.startsWith('username='));
+        if (username) {
+            document.getElementById('username').textContent = username.split('=')[1];
         } else {
-            document.getElementById('username').textContent = `Logged in as: ${username}`;
+            window.location.href = "login.html"; // Redirect if not logged in
         }
 
-        function navigate(page) {
-            const content = document.getElementById('content');
-            content.innerHTML = `<h1>${page}</h1><p>Content for ${page}.</p>`;
-        }
-
-        function logout() {
-            document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            window.location.href = 'login.html';
-        }
+        // Logout functionality
+        document.getElementById('logout').addEventListener('click', () => {
+            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = "login.html";
+        });
     </script>
 </body>
 </html>
