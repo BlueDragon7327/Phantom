@@ -3,362 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phantom - Dashboard</title>
+    <title>Dashboard - Phantom</title>
     <style>
-        /* Import Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
-        /* General Styles */
         body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #12121c);
-            color: #ffffff;
+            font-family: 'Arial', sans-serif;
             display: flex;
             height: 100vh;
-            overflow: hidden;
+            margin: 0;
+            background: linear-gradient(135deg, #1e1e2f, #3f3f5b);
+            color: #fff;
         }
 
-        /* Navigation Bar */
-        .nav-bar {
-            background: rgba(30, 30, 50, 0.95);
-            width: 250px;
+        .nav {
+            width: 20%;
+            background: #2a2a3d;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            padding: 30px 20px;
-            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.7);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: relative;
+            padding: 1rem;
         }
 
-        .nav-logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #8a2be2;
-            margin-bottom: 50px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .nav-item {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-            text-align: left;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1rem;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            background: rgba(138, 43, 226, 0.3);
-            transform: translateX(10px);
-        }
-
-        /* Bottom-Left Username Dropdown */
-        .username-dropdown {
-            position: absolute;
-            bottom: 30px;
-            left: 20px;
-            width: calc(100% - 40px);
-        }
-
-        .username {
-            cursor: pointer;
-            color: #8a2be2;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .username:hover {
-            background: rgba(138, 43, 226, 0.3);
-        }
-
-        .username-dropdown-menu {
-            display: none;
-            position: absolute;
-            left: 0;
-            bottom: 50px;
-            background: rgba(30, 30, 50, 0.95);
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            width: 100%;
-            z-index: 10;
-        }
-
-        .username-dropdown-menu a {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #ffffff;
-            transition: background 0.3s ease;
-            font-size: 0.95rem;
-        }
-
-        .username-dropdown-menu a:hover {
-            background: rgba(138, 43, 226, 0.4);
-        }
-
-        /* Dashboard Content */
-        .dashboard-content {
+        .main {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
-            overflow-y: auto;
-            background: linear-gradient(135deg, rgba(30, 30, 50, 0.9), rgba(20, 20, 35, 0.9));
-            position: relative;
+            padding: 2rem;
         }
 
-        .dashboard-header {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: #e0e0ff;
-            text-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        .user-info {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
         }
 
-        /* Download Button */
-        .download-section {
-            background: rgba(40, 40, 60, 0.8);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            text-align: center;
-            animation: fadeIn 1s ease-out forwards;
-        }
-
-        .download-section .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #8a2be2;
-            text-shadow: 0 3px 10px rgba(138, 43, 226, 0.4);
-        }
-
-        .download-button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, #8a2be2, #1e1e2f);
+        button {
+            background: #7f5eff;
             border: none;
-            color: #ffffff;
-            border-radius: 15px;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: #fff;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+            transition: background 0.3s ease;
         }
 
-        .download-button:hover {
-            background: linear-gradient(135deg, #1e1e2f, #8a2be2);
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.6);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-bar {
-                width: 200px;
-                padding: 20px;
-            }
-
-            .nav-logo {
-                font-size: 2rem;
-                margin-bottom: 30px;
-            }
-
-            .dashboard-content {
-                padding: 30px;
-            }
-
-            .dashboard-header {
-                font-size: 2rem;
-            }
-
-            .download-section .section-title {
-                font-size: 1.5rem;
-            }
-
-            .download-button {
-                font-size: 1rem;
-                padding: 12px 25px;
-            }
+        button:hover {
+            background: #9a7dff;
         }
     </style>
+</head>
+<body>
+    <div class="nav">
+        <h2>Phantom</h2>
+        <ul>
+            <li><button onclick="navigate('home')">Home</button></li>
+            <li><button onclick="navigate('settings')">Settings</button></li>
+            <li><button onclick="navigate('downloads')">Downloads</button></li>
+        </ul>
+        <div class="user-info">
+            <span id="username"></span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="main" id="content">
+        <h1>Welcome to the Dashboard</h1>
+        <p>Select an option from the navigation menu.</p>
+    </div>
+
     <script>
-        // Function to get a cookie
-        function getCookie(name) {
-            const cname = name + "=";
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const ca = decodedCookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(cname) === 0) {
-                    return c.substring(cname.length, c.length);
-                }
-            }
-            return "";
+        const username = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('username='))
+            ?.split('=')[1];
+
+        if (!username) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('username').textContent = `Logged in as: ${username}`;
         }
 
-        // Function to check login status
-        function checkLogin() {
-            const user = getCookie("username");
-            if (user === "") {
-                window.location.href = "login.html";
-            } else {
-                document.getElementById("username-display").textContent = user;
-            }
+        function navigate(page) {
+            const content = document.getElementById('content');
+            content.innerHTML = `<h1>${page}</h1><p>Content for ${page}.</p>`;
         }
 
-        // Function to handle logout
-        function handleLogout() {
-            document.cookie = "username=; path=/; max-age=0";
-            window.location.href = "login.html";
-        }
-
-        // Function to toggle dropdown menu
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdown-menu");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
-
-        // Function to handle navigation
-        function navigateTo(section) {
-            const dashboardContent = document.getElementById("dashboard-content");
-            // Remove active class from all nav items
-            const navItems = document.querySelectorAll(".nav-item");
-            navItems.forEach(item => item.classList.remove("active"));
-            // Add active class to the clicked nav item
-            event.currentTarget.classList.add("active");
-
-            // Define content for each section
-            let content = "";
-            switch(section) {
-                case "Home":
-                    content = `
-                        <div class="dashboard-header">Welcome to Your Dashboard</div>
-                        <div class="download-section">
-                            <div class="section-title">Download Phantom</div>
-                            <a href="https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html" class="download-button" target="_blank">Download Phantom</a>
-                        </div>
-                    `;
-                    break;
-                case "Settings":
-                    content = `
-                        <div class="dashboard-header">Settings</div>
-                        <div class="dashboard-section">
-                            <div class="section-title">Profile Settings</div>
-                            <p>Customize your Phantom experience here.</p>
-                        </div>
-                    `;
-                    break;
-                case "Profile":
-                    content = `
-                        <div class="dashboard-header">Profile</div>
-                        <div class="dashboard-section">
-                            <div class="section-title">User Profile</div>
-                            <p>Manage your account details.</p>
-                        </div>
-                    `;
-                    break;
-                case "Support":
-                    content = `
-                        <div class="dashboard-header">Support</div>
-                        <div class="dashboard-section">
-                            <div class="section-title">Need Help?</div>
-                            <p>Contact our support team for assistance.</p>
-                        </div>
-                    `;
-                    break;
-                default:
-                    content = `
-                        <div class="dashboard-header">Welcome to Your Dashboard</div>
-                        <div class="download-section">
-                            <div class="section-title">Download Phantom</div>
-                            <a href="https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html" class="download-button" target="_blank">Download Phantom</a>
-                        </div>
-                    `;
-            }
-
-            // Update dashboard content
-            dashboardContent.innerHTML = content;
-        }
-
-        // Close dropdown when clicking outside
-        window.onclick = function(event) {
-            const dropdown = document.getElementById("dropdown-menu");
-            const username = document.getElementById("username-display");
-            if (!username.contains(event.target)) {
-                dropdown.style.display = "none";
-            }
+        function logout() {
+            document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            window.location.href = 'login.html';
         }
     </script>
-</head>
-<body onload="checkLogin()">
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-        <div class="nav-logo">Phantom</div>
-        <button class="nav-item active" onclick="navigateTo('Home')">
-            <span>🏠</span> Home
-        </button>
-        <button class="nav-item" onclick="navigateTo('Settings')">
-            <span>⚙️</span> Settings
-        </button>
-        <button class="nav-item" onclick="navigateTo('Profile')">
-            <span>📂</span> Profile
-        </button>
-        <button class="nav-item" onclick="navigateTo('Support')">
-            <span>🛠️</span> Support
-        </button>
-
-        <!-- Username Dropdown -->
-        <div class="username-dropdown">
-            <div class="username" onclick="toggleDropdown()">
-                <span id="username-display"></span> ▼
-            </div>
-            <div class="username-dropdown-menu" id="dropdown-menu">
-                <a href="#" onclick="handleLogout()">Logout</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dashboard Content -->
-    <div class="dashboard-content" id="dashboard-content">
-        <div class="dashboard-header">Welcome to Your Dashboard</div>
-        <div class="download-section">
-            <div class="section-title">Download Phantom</div>
-            <a href="https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html" class="download-button" target="_blank">Download Phantom</a>
-        </div>
-    </div>
 </body>
 </html>
