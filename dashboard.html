@@ -51,6 +51,9 @@
             border-radius: 8px;
             color: #d1d1e9;
             transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .sidebar .nav a.active, .sidebar .nav a:hover {
@@ -59,37 +62,41 @@
         }
 
         .sidebar .user {
+            position: relative;
             text-align: center;
             font-size: 14px;
             color: #d1d1e9;
-            position: relative;
         }
 
         .sidebar .user .dropdown {
             display: none;
-            background: #3c3c59;
             position: absolute;
-            bottom: -50px;
+            bottom: -80px;
             left: 50%;
             transform: translateX(-50%);
+            background: #3c3c59;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .sidebar .user:hover .dropdown {
-            display: block;
+            overflow: hidden;
+            width: 150px;
         }
 
         .sidebar .user .dropdown a {
-            color: #d1d1e9;
             display: block;
-            padding: 10px 20px;
             text-decoration: none;
+            padding: 10px 15px;
+            color: #d1d1e9;
+            font-size: 14px;
+            transition: background 0.3s;
         }
 
         .sidebar .user .dropdown a:hover {
             background: #7f5af0;
             color: #fff;
+        }
+
+        .sidebar .user:hover .dropdown {
+            display: block;
         }
 
         /* Main Dashboard Content */
@@ -176,10 +183,10 @@
     <div class="sidebar">
         <div class="logo">Phantom</div>
         <div class="nav">
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Settings</a>
-            <a href="#">About</a>
-            <a href="#">Support</a>
+            <a href="#" class="active">📊 Dashboard</a>
+            <a href="#">⚙️ Settings</a>
+            <a href="#">ℹ️ About</a>
+            <a href="#">🛠️ Support</a>
         </div>
         <div class="user">
             Logged in as: <strong id="username">dev</strong>
@@ -193,23 +200,23 @@
     <div class="main">
         <div class="header">
             <h1>Welcome to the Phantom Dashboard</h1>
-            <button>Download Phantom</button>
+            <button onclick="window.open('https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html', '_blank')">Download Phantom</button>
         </div>
         <div class="content">
             <div class="card">
-                <h2>Module 1</h2>
-                <p>Manage your app settings here.</p>
-                <button>Open</button>
+                <h2>Feature 1</h2>
+                <p>Control and manage your app features here.</p>
+                <button>Learn More</button>
             </div>
             <div class="card">
-                <h2>Module 2</h2>
-                <p>Access tools and utilities.</p>
-                <button>Open</button>
+                <h2>Feature 2</h2>
+                <p>Access additional tools and options.</p>
+                <button>Explore</button>
             </div>
             <div class="card">
-                <h2>Module 3</h2>
-                <p>Learn more about Phantom's features.</p>
-                <button>Open</button>
+                <h2>Feature 3</h2>
+                <p>View app insights and analytics.</p>
+                <button>Details</button>
             </div>
         </div>
     </div>
