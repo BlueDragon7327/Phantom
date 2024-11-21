@@ -68,6 +68,10 @@
             color: #d1d1e9;
         }
 
+        .sidebar .user strong {
+            cursor: pointer;
+        }
+
         .sidebar .user .dropdown {
             display: none;
             position: absolute;
@@ -183,10 +187,10 @@
     <div class="sidebar">
         <div class="logo">Phantom</div>
         <div class="nav">
-            <a href="#" class="active">📊 Dashboard</a>
-            <a href="#">⚙️ Settings</a>
-            <a href="#">ℹ️ About</a>
-            <a href="#">🛠️ Support</a>
+            <a href="#" class="active" onclick="loadContent('dashboard')">📊 Dashboard</a>
+            <a href="#" onclick="loadContent('settings')">⚙️ Settings</a>
+            <a href="#" onclick="loadContent('about')">ℹ️ About</a>
+            <a href="#" onclick="loadContent('support')">🛠️ Support</a>
         </div>
         <div class="user">
             Logged in as: <strong id="username">dev</strong>
@@ -197,7 +201,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main">
+    <div class="main" id="main-content">
         <div class="header">
             <h1>Welcome to the Phantom Dashboard</h1>
             <button onclick="window.open('https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html', '_blank')">Download Phantom</button>
@@ -222,6 +226,56 @@
     </div>
 
     <script>
+        const contentTemplates = {
+            dashboard: `
+                <div class="header">
+                    <h1>Welcome to the Phantom Dashboard</h1>
+                    <button onclick="window.open('https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html', '_blank')">Download Phantom</button>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h2>Feature 1</h2>
+                        <p>Control and manage your app features here.</p>
+                        <button>Learn More</button>
+                    </div>
+                    <div class="card">
+                        <h2>Feature 2</h2>
+                        <p>Access additional tools and options.</p>
+                        <button>Explore</button>
+                    </div>
+                </div>
+            `,
+            settings: `
+                <div class="header">
+                    <h1>Settings</h1>
+                </div>
+                <div class="content">
+                    <p>Here you can configure your preferences and settings.</p>
+                </div>
+            `,
+            about: `
+                <div class="header">
+                    <h1>About Phantom</h1>
+                </div>
+                <div class="content">
+                    <p>Phantom is the leading solution for secure bypassing.</p>
+                </div>
+            `,
+            support: `
+                <div class="header">
+                    <h1>Support</h1>
+                </div>
+                <div class="content">
+                    <p>Contact us for assistance or troubleshooting.</p>
+                </div>
+            `
+        };
+
+        function loadContent(section) {
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = contentTemplates[section];
+        }
+
         // Retrieve username from cookies
         const username = document.cookie.split('; ').find(row => row.startsWith('username='));
         if (username) {
@@ -231,8 +285,9 @@
         }
 
         // Logout functionality
-        document.getElementById('logout').addEventListener('click', () => {
-            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.getElementById('logout').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             window.location.href = "login.html";
         });
     </script>
