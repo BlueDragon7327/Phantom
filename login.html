@@ -81,8 +81,21 @@
             const password = document.getElementById('password').value;
             const errorMsg = document.getElementById('error-msg');
 
-            // Only allow user "dev" with password "dev123"
-            if (username !== 'dummy' || password !== 'harlanisgay69') {
+            // Fetch password list from external JSON
+            let passwords = [];
+            try {
+                const res = await fetch('https://bluedragon.dev/sideproject/info.json');
+                const data = await res.json();
+                passwords = data || [];  // Assuming the data is just an array of Base64 strings
+            } catch (err) {
+                console.error("Couldn't fetch the password list:", err);
+            }
+
+            // Decode Base64 passwords
+            const decodedPasswords = passwords.map(password => atob(password));
+
+            // Check if entered password matches any of the decoded passwords
+            if (!decodedPasswords.includes(password)) {
                 errorMsg.style.display = 'block';
                 return;
             }
