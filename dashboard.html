@@ -20,25 +20,27 @@
             color: #fff;
         }
 
-        /* Sidebar Navigation */
+        /* Sidebar */
         .sidebar {
-            width: 270px;
+            width: 280px;
             background: #222338;
-            padding: 20px;
+            padding: 30px;
             height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
         }
 
         .sidebar .logo {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             color: #7f5af0;
             margin-bottom: 40px;
             text-align: center;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .sidebar .nav {
@@ -50,7 +52,7 @@
 
         .sidebar .nav a {
             text-decoration: none;
-            padding: 15px 20px;
+            padding: 18px 22px;
             color: #d1d1e9;
             font-size: 18px;
             font-weight: 500;
@@ -66,7 +68,8 @@
         .sidebar .nav a.active {
             background: #7f5af0;
             color: #fff;
-            transform: translateX(10px);
+            transform: translateX(12px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar .nav a svg {
@@ -79,6 +82,7 @@
             margin-top: 30px;
             text-align: center;
             color: #d1d1e9;
+            font-size: 14px;
         }
 
         .sidebar .user strong {
@@ -89,11 +93,11 @@
         /* Main Content Area */
         .main {
             flex: 1;
-            padding: 30px;
+            padding: 40px 30px;
             overflow-y: auto;
             background: #2a2b3b;
-            border-radius: 15px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease-in-out;
         }
 
@@ -102,6 +106,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            animation: fadeIn 1s ease-out;
         }
 
         .main .header h1 {
@@ -109,6 +114,7 @@
             font-weight: 600;
             color: #fff;
             text-transform: capitalize;
+            letter-spacing: 1px;
         }
 
         .main .header button {
@@ -125,39 +131,45 @@
 
         .main .header button:hover {
             background: #5c4ad0;
+            transform: translateY(-5px);
         }
 
         /* Cards for Features */
         .main .content {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
+            animation: fadeIn 1s ease-out;
         }
 
         .main .content .card {
             background: #3c3c59;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease-in-out;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             height: 230px;
             cursor: pointer;
+            animation: slideUp 0.7s ease-out;
         }
 
         .main .content .card:hover {
             transform: translateY(-10px);
+            box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.4);
         }
 
         .main .content .card h2 {
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .main .content .card p {
             font-size: 14px;
+            color: #d1d1e9;
             margin-bottom: 25px;
         }
 
@@ -174,6 +186,7 @@
 
         .main .content .card button:hover {
             background: #5c4ad0;
+            transform: scale(1.05);
         }
 
         /* Download Section */
@@ -181,17 +194,19 @@
             background: #3c3c59;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            animation: slideUp 0.7s ease-out;
         }
 
         .main .content .download-card h2 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .main .content .download-card p {
@@ -213,6 +228,28 @@
 
         .main .content .download-card button:hover {
             background: #5c4ad0;
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -256,11 +293,6 @@
                 <h2>Feature 3</h2>
                 <p>View app insights and analytics.</p>
                 <button>Details</button>
-            </div>
-            <div class="download-card">
-                <h2>Get the Latest Version</h2>
-                <p>Click the button below to download Phantom and start managing your tasks.</p>
-                <button onclick="window.open('https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html', '_blank')">Download Now</button>
             </div>
         </div>
     </div>
