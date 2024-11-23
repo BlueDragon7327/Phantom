@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phantom Dashboard</title>
     <style>
-        /* Reset and Global Styles */
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
@@ -16,200 +16,199 @@
         body {
             display: flex;
             height: 100vh;
-            background: linear-gradient(135deg, #1e1e2f, #3c3c59);
+            background: linear-gradient(145deg, #1c1c2d, #333355);
             color: #fff;
         }
 
         /* Sidebar Navigation */
         .sidebar {
-            width: 250px;
-            background: #28293e;
+            width: 270px;
+            background: #222338;
+            padding: 20px;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 20px 10px;
+            align-items: center;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 26px;
+            font-weight: 700;
             color: #7f5af0;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             text-align: center;
+            letter-spacing: 1px;
         }
 
         .sidebar .nav {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            width: 100%;
+            margin-bottom: auto;
         }
 
         .sidebar .nav a {
             text-decoration: none;
-            font-size: 16px;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 15px 20px;
             color: #d1d1e9;
-            transition: background 0.3s;
+            font-size: 18px;
+            font-weight: 500;
+            border-radius: 12px;
+            margin: 8px 0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            transition: all 0.3s;
         }
 
-        .sidebar .nav a.active, .sidebar .nav a:hover {
+        .sidebar .nav a:hover,
+        .sidebar .nav a.active {
             background: #7f5af0;
             color: #fff;
+            transform: translateX(10px);
+        }
+
+        .sidebar .nav a svg {
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s;
         }
 
         .sidebar .user {
-            position: relative;
+            margin-top: 30px;
             text-align: center;
-            font-size: 14px;
             color: #d1d1e9;
         }
 
         .sidebar .user strong {
             cursor: pointer;
+            color: #7f5af0;
         }
 
-        .sidebar .user .dropdown {
-            display: none;
-            position: absolute;
-            bottom: -80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #3c3c59;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            width: 150px;
-        }
-
-        .sidebar .user .dropdown a {
-            display: block;
-            text-decoration: none;
-            padding: 10px 15px;
-            color: #d1d1e9;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .sidebar .user .dropdown a:hover {
-            background: #7f5af0;
-            color: #fff;
-        }
-
-        .sidebar .user:hover .dropdown {
-            display: block;
-        }
-
-        /* Main Dashboard Content */
+        /* Main Content Area */
         .main {
             flex: 1;
-            padding: 20px;
+            padding: 30px;
             overflow-y: auto;
+            background: #2a2b3b;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
         }
 
         .main .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .main .header h1 {
-            font-size: 28px;
+            font-size: 32px;
+            font-weight: 600;
             color: #fff;
+            text-transform: capitalize;
         }
 
         .main .header button {
+            padding: 15px 25px;
             background: #7f5af0;
-            color: #fff;
+            color: white;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
         .main .header button:hover {
             background: #5c4ad0;
         }
 
+        /* Cards for Features */
         .main .content {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 30px;
         }
 
         .main .content .card {
             background: #3c3c59;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 230px;
+            cursor: pointer;
         }
 
         .main .content .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
         }
 
         .main .content .card h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 15px;
         }
 
         .main .content .card p {
             font-size: 14px;
-            color: #d1d1e9;
+            margin-bottom: 25px;
         }
 
         .main .content .card button {
-            margin-top: 15px;
             background: #7f5af0;
-            color: #fff;
+            color: white;
             border: none;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
         .main .content .card button:hover {
             background: #5c4ad0;
         }
 
-        /* New Download Section */
+        /* Download Section */
         .main .content .download-card {
             background: #3c3c59;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
         }
 
         .main .content .download-card h2 {
-            font-size: 22px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 15px;
         }
 
         .main .content .download-card p {
-            font-size: 14px;
-            color: #d1d1e9;
+            font-size: 16px;
+            margin-bottom: 20px;
         }
 
         .main .content .download-card button {
             background: #7f5af0;
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
+            color: white;
+            padding: 15px 40px;
             border-radius: 50px;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
         .main .content .download-card button:hover {
@@ -257,6 +256,11 @@
                 <h2>Feature 3</h2>
                 <p>View app insights and analytics.</p>
                 <button>Details</button>
+            </div>
+            <div class="download-card">
+                <h2>Get the Latest Version</h2>
+                <p>Click the button below to download Phantom and start managing your tasks.</p>
+                <button onclick="window.open('https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html', '_blank')">Download Now</button>
             </div>
         </div>
     </div>
