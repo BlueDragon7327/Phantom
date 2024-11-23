@@ -180,6 +180,41 @@
         .main .content .card button:hover {
             background: #5c4ad0;
         }
+
+        /* New Download Section */
+        .main .content .download-card {
+            background: #3c3c59;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .main .content .download-card h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .main .content .download-card p {
+            font-size: 14px;
+            color: #d1d1e9;
+        }
+
+        .main .content .download-card button {
+            background: #7f5af0;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .main .content .download-card button:hover {
+            background: #5c4ad0;
+        }
     </style>
 </head>
 <body>
@@ -191,6 +226,7 @@
             <a href="#" onclick="loadContent('settings')">⚙️ Settings</a>
             <a href="#" onclick="loadContent('about')">ℹ️ About</a>
             <a href="#" onclick="loadContent('support')">🛠️ Support</a>
+            <a href="#" onclick="loadContent('download')">⬇️ Download</a>
         </div>
         <div class="user">
             Logged in as: <strong id="username">dev</strong>
@@ -267,6 +303,18 @@
                 </div>
                 <div class="content">
                     <p>Contact us for assistance or troubleshooting.</p>
+                </div>
+            `,
+            download: `
+                <div class="header">
+                    <h1>Download Phantom</h1>
+                </div>
+                <div class="content">
+                    <div class="download-card">
+                        <h2>Get the Latest Version of Phantom</h2>
+                        <p>Click below to download the latest release of Phantom for your device.</p>
+                        <button onclick="window.open('https://github.com/BlueDragon7327/Phantom/releases/latest/download/Phantom.html', '_blank')">Download Phantom</button>
+                    </div>
                 </div>
             `
         };
