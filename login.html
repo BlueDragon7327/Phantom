@@ -102,7 +102,7 @@
             // Fetch password list from external JSON
             let passwords = [];
             try {
-                const res = await fetch('https://bluedragon.dev/sideproject/info.json');
+                const res = await fetch('https://raw.githubusercontent.com/BlueDragon7327/sideproject/refs/heads/main/info.json');
                 const data = await res.json();
                 passwords = data || [];  // Assuming the data is just an array of Base64 strings
             } catch (err) {
