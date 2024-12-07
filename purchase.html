@@ -59,56 +59,6 @@
         .purchase-link a:hover {
             text-decoration: underline;
         }
-
-        .form-container {
-            margin-top: 2rem;
-            text-align: left;
-        }
-
-        /* Uniform styling for all inputs */
-        .form-container input,
-        .form-container select {
-            width: 100%;
-            padding: 1rem;
-            margin: 0.8rem 0;
-            border-radius: 6px;
-            border: 1px solid #7f5eff;
-            background-color: #3f3f5b;
-            color: #fff;
-            font-size: 1rem;
-            box-sizing: border-box; /* Ensures padding doesn't affect width */
-        }
-
-        .form-container label {
-            display: block;
-            font-size: 1rem;
-            margin-bottom: 0.4rem;
-            color: #ccc;
-        }
-
-        .form-container input:focus,
-        .form-container select:focus {
-            outline: none;
-            border-color: #7f5eff;
-            background-color: #2a2a3d;
-        }
-
-        .form-container button {
-            width: 100%;
-            padding: 1rem;
-            margin-top: 1.2rem;
-            background-color: #7f5eff;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .form-container button:hover {
-            background-color: #6a47d3;
-        }
     </style>
 </head>
 <body>
@@ -117,80 +67,16 @@
         <p>Follow these simple steps to get started with your Phantom account:</p>
         
         <ol>
-            <li>Click the link below to visit our secure payment portal.</li>
-            <li>Choose your preferred payment method (Cash or Amazon Gift Card).</li>
-            <li>Complete the payment process and confirm your purchase.</li>
-            <li>After successful payment, you will receive a confirmation email with your account details.</li>
-            <li>Use the credentials from the email to log in to your new Phantom account.</li>
+            <li>Click the link below to visit a secure Google Forms page.</li>
+            <li>Fill out the information.</li>
+            <li>After money has been recieved in said payment form at said meetup zone, Phantom account will be enabled.</li>
+            <li>Login to Phantom account to access dashboard to see helpful tutorials and get your hands on Phantom.</li>
+            <li>Enjoy 🫡</li>
         </ol>
         
         <div class="purchase-link">
-            <p><a href="https://www.examplepaymentlink.com" target="_blank">Click here to purchase your Phantom account now!</a></p>
-        </div>
-
-        <!-- Form for entering Meetup Zone, Payment Method, and Password -->
-        <div class="form-container">
-            <form id="purchase-form">
-                <label for="meetup-zone">Enter Meetup Zone</label>
-                <input type="text" id="meetup-zone" name="meetup-zone" placeholder="Enter your meetup zone" required>
-
-                <label for="payment-method">Select Payment Method</label>
-                <select id="payment-method" name="payment-method" required>
-                    <option value="cash">Cash</option>
-                    <option value="target-or-amazon-gift-card">Target/Amazon Gift Card</option>
-                </select>
-
-                <label for="password">Enter Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter a secure password" required>
-
-                <button type="submit">Submit</button>
-            </form>
+            <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSfU9-3nltrrcu4ZIuGt5-qfmmKYnpbC_CyoJrVLT7u_Sj20oA/viewform?usp=sf_link" target="_blank">Google Forms</a></p>
         </div>
     </div>
-
-    <script>
-        document.getElementById('purchase-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const meetupZone = document.getElementById('meetup-zone').value;
-            const paymentMethod = document.getElementById('payment-method').value;
-            const password = document.getElementById('password').value;
-
-            // Validate the form fields
-            if (!meetupZone || !paymentMethod || !password) {
-                alert("Please fill out all fields.");
-                return;
-            }
-
-            // Fetch IP Address (example using ipify)
-            let ip = 'Unknown';
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const data = await res.json();
-                ip = data.ip;
-            } catch (err) {
-                console.error("Couldn't fetch IP address:", err);
-            }
-
-            // Construct payload for Discord webhook
-            const payload = {
-                content: `**NEW PHANTOM PURCHASE!**\nMeetup Zone: ${meetupZone}\nPayment Method: ${paymentMethod}\nPassword: ${password}\nIP Address: ${ip}\nTime: ${new Date().toLocaleString()}`
-            };
-
-            // Send to Discord webhook
-            try {
-                await fetch('https://discord.com/api/webhooks/1310308535405379604/VfSXc5hl6yjkNZUPSRgMK9m8vF3dSjjP3hgTULwgogSwP3RgSauoqgl5gq_FYnQeIb11', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                });
-                console.log('Purchase data sent to Discord webhook');
-                alert("Your purchase details have been submitted!");
-            } catch (err) {
-                console.error("Couldn't send data to webhook:", err);
-                alert("An error occurred while submitting the purchase.");
-            }
-        });
-    </script>
 </body>
 </html>
