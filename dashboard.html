@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Dashboard - Phantom</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #6a5acd;
+            --secondary-color: #4b0082;
+            --background-dark: #0f0f1a;
+            --card-background: #1a1a2e;
+            --text-light: #e0e0e0;
+            --text-muted: #8c8c9c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--background-dark) 0%, #1a1a2e 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: #2a2a3d;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: #2a2a3d;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-container input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px 0;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background: var(--secondary-color);
+        }
+
+        .error {
+            margin-top: 1rem;
+            color: #ff5e5e;
+            font-size: 0.9rem;
+        }
+
+        .signup-link {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .signup-link a {
+            color: #7f5eff;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar and Dashboard Styles */
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            display: none;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--card-background);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid rgba(106, 90, 205, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-muted);
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(106, 90, 205, 0.2);
+            color: var(--primary-color);
+            transform: translateX(10px);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 50px 40px;
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(15px);
+            overflow-y: auto;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .content-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .download-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(106, 90, 205, 0.1);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: var(--primary-color);
+        }
+
+        .feature-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .feature-btn {
+            align-self: flex-start;
+            background: rgba(106, 90, 205, 0.1);
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 20px;
+                border-right: none;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div class="login-container" id="login-container">
+        <h1>Login to Phantom</h1>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p class="error" id="error-msg" style="display: none;">Invalid username or password.</p>
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="purchase.html">Buy Now!</a></p>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container" id="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">Phantom</div>
+            <nav class="nav-menu">
+                <div class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-chart-pie"></i> Dashboard
+                </div>
+                <div class="nav-item" data-section="features">
+                    <i class="fas fa-rocket"></i> Features
+                </div>
+                <div class="nav-item" data-section="analytics">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </div>
+                <div class="nav-item" data-section="support">
+                    <i class="fas fa-headset"></i> Support
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="main-content">
+            <!-- Content will be dynamically loaded here -->
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            // Fetch password list from external JSON
+            let passwords = [];
+            try {
+                const res = await fetch('https://raw.githubusercontent.com/BlueDragon7327/sideproject/refs/heads/main/info.json');
+                const data = await res.json();
+                passwords = data || [];
+            } catch (err) {
+                console.error("Couldn't fetch the password list:", err);
+            }
+
+            // Decode Base64 passwords
+            const decodedPasswords = passwords.map(password => atob(password));
+
+            // Check if entered password matches any of the decoded passwords
+            if (!decodedPasswords.includes(password)) {
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+
+            // Show dashboard after successful login
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('dashboard-container').style.display = 'flex';
+
+            // Set username for dashboard and redirect functionality
+            document.cookie = `username=${username}; path=/;`;
+        });
+
+        // Content templates for dashboard sections
+        const contentTemplates = {
+            dashboard: () => `
+                <div class="content-header">
+                    <h1>Dashboard Overview</h1>
+                    <button class="download-btn">Download Phantom</button>
+                </div>
+                <div class="content-grid animate-fade-in">
+                    <div class="feature-card">
+                        <div>
+                            <h2>Performance Insights</h2>
+                            <p>Gain deep insights into your application's performance and user engagement metrics.</p>
+                        </div>
+                        <button class="feature-btn">Explore Details</button>
+                    </div>
+                    <div class="feature-card">
+                        <div>
+                            <h2>Advanced Analytics</h2>
+                            <p>Comprehensive data visualization and trend analysis for strategic decision-making.</p>
+                        </div>
+                        <button class="feature-btn">View Analytics</button>
+                    </div>
+                    <div class="feature-card">
+                        <div>
+                            <h2>Security Dashboard</h2>
+                            <p>Real-time monitoring of system security, threat detection, and risk management.</p>
+                        </div>
+                        <button class="feature-btn">Check Security</button>
+                    </div>
+                </div>
+            `,
+            features: () => `
+                <div class="content-header">
+                    <h1>Phantom Features</h1>
+                </div>
+                <div class="content-grid animate-fade-in">
+                    <div class="feature-card">
+                        <div>
+                            <h2>Network Bypass</h2>
+                            <p>Advanced network tunneling and proxy management capabilities.</p>
+                        </div>
+                        <button class="feature-btn">Learn More</button>
+                    </div>
+                    <div class="feature-card">
+                        <div>
+                            <h2>Encryption Tools</h2>
+                            <p>State-of-the-art encryption and secure communication protocols.</p>
+                        </div>
+                        <button class="feature-btn">Explore</button>
+                    </div>
+                    <div class="feature-card">
+                        <div>
+                            <h2>Anonymous Routing</h2>
+                            <p>Multiple layers of anonymity and IP masking techniques.</p>
+                        </div>
+                        <button class="feature-btn">Configure</button>
+                    </div>
+                </div>
+            `,
+            analytics: () => `
+                <div class="content-header">
+                    <h1>Analytics Overview</h1>
+                </div>
+                <div class="content-grid animate-fade-in">
+                    <div class="feature-card">
+                        <div>
+                            <h2>Traffic Data</h2>
+                            <p>Visualize user interactions and traffic data across multiple regions.</p>
+                        </div>
+                        <button class="feature-btn">View Analytics</button>
+                    </div>
+                    <div class="feature-card">
+                        <div>
+                            <h2>Engagement Analysis</h2>
+                            <p>Track and analyze user engagement with your services.</p>
+                        </div>
+                        <button class="feature-btn">See Trends</button>
+                    </div>
+                </div>
+            `,
+            settings: () => `
+                <div class="content-header">
+                    <h1>Account Settings</h1>
+                </div>
+                <div class="content-grid animate-fade-in">
+                    <div class="feature-card">
+                        <div>
+                            <h2>Change Password</h2>
+                            <p>Update your account password for enhanced security.</p>
+                        </div>
+                        <button class="feature-btn">Change</button>
+                    </div>
+                    <div class="feature-card">
+                        <div>
+                            <h2>Update Email</h2>
+                            <p>Change the email associated with your account.</p>
+                        </div>
+                        <button class="feature-btn">Update</button>
+                    </div>
+                </div>
+            `,
+            support: () => `
+                <div class="content-header">
+                    <h1>Support Center</h1>
+                </div>
+                <div class="content-grid animate-fade-in">
+                    <div class="feature-card">
+                        <div>
+                            <h2>Contact Support</h2>
+                            <p>Get in touch with our support team for assistance.</p>
+                        </div>
+                        <button class="feature-btn">Contact</button>
+                    </div>
+                    <div class="feature-card">
+                        <div>
+                            <h2>FAQ</h2>
+                            <p>Check out the most frequently asked questions and troubleshooting tips.</p>
+                        </div>
+                        <button class="feature-btn">View FAQ</button>
+                    </div>
+                </div>
+            `
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.getElementById('main-content');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            // Initial load of dashboard content
+            mainContent.innerHTML = contentTemplates.dashboard();
+
+            // Navigation handling
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    navItems.forEach(el => el.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    const section = e.currentTarget.getAttribute('data-section');
+                    mainContent.innerHTML = contentTemplates[section]();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
